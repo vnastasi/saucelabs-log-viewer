@@ -7,7 +7,6 @@ import md.vnastasi.slv.data.LogEntry;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class LogFileParserImpl implements LogFileParser {

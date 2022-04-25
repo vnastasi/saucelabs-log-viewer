@@ -24,4 +24,13 @@ subprojects {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.withType<Test> {
+    jvmArgs?.add("--enable-preview")
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs?.add("--enable-preview")
 }

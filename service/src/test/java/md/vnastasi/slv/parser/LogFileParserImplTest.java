@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import md.vnastasi.slv.data.LogEntry;
 import md.vnastasi.slv.data.LogLevel;
+import md.vnastasi.slv.parser.LogFileParser;
+import md.vnastasi.slv.parser.LogFileParserImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
