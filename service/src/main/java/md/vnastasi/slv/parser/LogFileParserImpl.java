@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import md.vnastasi.slv.data.LogEntry;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,12 +17,12 @@ public class LogFileParserImpl implements LogFileParser {
 
     private final ObjectMapper objectMapper;
 
-    public LogFileParserImpl(ObjectMapper objectMapper) {
+    public LogFileParserImpl(@NotNull ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
     @Override
-    public List<LogEntry> parse(Path filePath) throws IOException {
+    public @NotNull List<LogEntry> parse(@NotNull Path filePath) throws IOException {
         return objectMapper.readValue(Files.newInputStream(filePath), TYPE_TOKEN);
     }
 }

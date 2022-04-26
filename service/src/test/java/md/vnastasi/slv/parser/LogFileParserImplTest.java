@@ -34,7 +34,7 @@ class LogFileParserImplTest {
         var filePath = Paths.get(System.getProperty("java.io.tmpdir"), FILE_NAME);
         var randomizer = new SecureRandom();
 
-        var list = IntStream.range(0, 500_000)
+        var list = IntStream.range(0, 1_000_000)
                 .mapToObj(id -> {
                     var level = LogLevel.values()[Math.abs(randomizer.nextInt()) % LogLevel.values().length];
                     var time = LocalDateTime.now().format(FORMATTER);
@@ -50,6 +50,6 @@ class LogFileParserImplTest {
     @Test
     void testDeserialization() throws IOException {
         var list = parser.parse(Paths.get(System.getProperty("java.io.tmpdir"), FILE_NAME));
-        assertEquals(500_000, list.size());
+        assertEquals(1_000_000, list.size());
     }
 }

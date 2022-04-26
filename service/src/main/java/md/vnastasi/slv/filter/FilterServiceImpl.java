@@ -2,22 +2,25 @@ package md.vnastasi.slv.filter;
 
 import md.vnastasi.slv.data.LogEntry;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class FilterServiceImpl implements FilterService {
 
-    private final List<LogEntry> list;
+    private final Supplier<List<LogEntry>> listSupplier;
 
-    public FilterServiceImpl(List<LogEntry> list) {
-        this.list = list;
+    public FilterServiceImpl(@NotNull Supplier<List<LogEntry>> listSupplier) {
+        this.listSupplier = listSupplier;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<LogEntry> filer(List<Filter> filters) {
+    public @NotNull Stream<LogEntry> filter(@NotNull List<Filter> filters) {
         if (filters.isEmpty()) throw new IllegalArgumentException("Filter list cannot be empty");
-        var predicate = filters.stream().map(Predicate.class::cast).reduce(filters.get(0), Predicate::and);
-        return list.parallelStream().filter(predicate).toList();
+        var predicate = filters.stream().map(Predicate.class::cast).reduce(it -> true, Predicate::and);
+        return listSupplier.get().parallelStream().filter(predicate);
     }
 }

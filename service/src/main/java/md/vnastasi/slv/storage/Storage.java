@@ -12,12 +12,11 @@ public class Storage {
     private Storage() {
     }
 
-    @NotNull
-    public List<LogEntry> getList() {
+    public @NotNull List<LogEntry> getList() {
         return list;
     }
 
-    public void setList(@NotNull List<LogEntry> list) {
+    public synchronized void setList(@NotNull List<LogEntry> list) {
         this.list = list;
     }
 
@@ -26,7 +25,7 @@ public class Storage {
         private static final Storage _instance = new Storage();
     }
 
-    public static Storage getInstance() {
+    public static @NotNull Storage getInstance() {
         return StorageInstance._instance;
     }
 }

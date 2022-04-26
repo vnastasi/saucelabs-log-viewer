@@ -36,61 +36,61 @@ class FilterServiceImplTest {
             new LogEntry(23, "23:59:59", LogLevel.INFO, "Some arbitrary message")
     );
 
-    private final FilterService filterService = new FilterServiceImpl(list);
+    private final FilterService filterService = new FilterServiceImpl(() -> list);
 
     @Test
     void verifyFilterByMessage() {
         var filter = new Filter.ByMessage("arbitrary", true);
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(1, 6, 7, 9, 10, 11, 14, 15, 17, 23);
     }
 
     @Test
     void verifyFilterByMessageCaseInsensitive() {
         var filter = new Filter.ByMessage("arbitrary", false);
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(1, 3, 4, 5, 6, 7, 9, 10, 11, 14, 15, 17, 23);
     }
 
     @Test
     void verifyFilterByOneLogLevel() {
         var filter = new Filter.ByLogLevel(List.of(LogLevel.VERBOSE));
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(6, 8, 11, 12, 14, 18, 19);
     }
 
     @Test
     void verifyFilterByTwoLogLevels() {
         var filter = new Filter.ByLogLevel(List.of(LogLevel.VERBOSE, LogLevel.INFO));
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(1, 4, 6, 7, 8, 10, 11, 12, 14, 15, 17, 18, 19, 20, 21, 23);
     }
 
     @Test
     void verifyFilterByLineRange() {
         var filter = new Filter.ByLineRange(5, 8);
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(5, 6, 7, 8);
     }
 
     @Test
     void verifyFilterByTimeRange() {
         var filter = new Filter.ByTimeRange("00:01:00", "00:02:57");
-        var result = filterService.filer(List.of(filter));
+        var result = filterService.filter(List.of(filter));
         assertThat(result).extracting(LogEntry::id).containsExactly(4, 5, 6, 7);
     }
 
     @Test
     void verifyCombiFilterTwoValues() {
         List<Filter> filters = List.of(new Filter.ByLineRange(6, 18), new Filter.ByLogLevel(List.of(LogLevel.VERBOSE)));
-        var result = filterService.filer(filters);
+        var result = filterService.filter(filters);
         assertThat(result).extracting(LogEntry::id).containsExactly(6, 8, 11, 12, 14, 18);
     }
 
     @Test
     void verifyCombiFilterThreeValues() {
         List<Filter> filters = List.of(new Filter.ByLineRange(6, 18), new Filter.ByLogLevel(List.of(LogLevel.VERBOSE)), new Filter.ByMessage("Some", true));
-        var result = filterService.filer(filters);
+        var result = filterService.filter(filters);
         assertThat(result).extracting(LogEntry::id).containsExactly(6, 11, 14);
     }
 }
