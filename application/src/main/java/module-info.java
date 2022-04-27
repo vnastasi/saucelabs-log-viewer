@@ -1,9 +1,14 @@
-module md.vnastasi.application {
+module slv.app {
+
     requires javafx.controls;
     requires javafx.fxml;
     requires org.controlsfx.controls;
+    requires slv.service;
 
-    opens md.vnastasi.application to javafx.fxml;
+    opens md.vnastasi.slv.app to javafx.fxml;
 
-    exports md.vnastasi.application;
+    exports md.vnastasi.slv.app;
+    exports md.vnastasi.slv.app.scene;
+
+    opens md.vnastasi.slv.app.scene to javafx.fxml;
 }

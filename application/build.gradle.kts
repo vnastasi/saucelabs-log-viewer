@@ -6,8 +6,8 @@ plugins {
 }
 
 application {
-    mainModule.set("md.vnastasi.application")
-    mainClass.set("md.vnastasi.application.HelloApplication")
+    mainModule.set("md.vnastasi.slv.app")
+    mainClass.set("md.vnastasi.slv.app.SaucelabsLogViewerApplication")
 }
 
 javafx {
@@ -21,6 +21,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":service"))
     implementation("org.controlsfx:controlsfx:11.1.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

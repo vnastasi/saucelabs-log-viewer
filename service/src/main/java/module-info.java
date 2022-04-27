@@ -1,4 +1,4 @@
-module saucelabs.log.viewer.service {
+module slv.service {
 
     exports md.vnastasi.slv.usecase;
     exports md.vnastasi.slv.usecase.model;
