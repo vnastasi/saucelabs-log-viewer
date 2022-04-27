@@ -8,5 +8,8 @@ import java.util.stream.Stream;
 
 public interface FilterService {
 
-    @NotNull Stream<LogEntry> filter(@NotNull List<Filter> filters);
+    @NotNull Stream<LogEntry> filter(
+            @NotNull List<LogEntry> logEntries,
+            @NotNull List<Filter> filters
+    );
 }

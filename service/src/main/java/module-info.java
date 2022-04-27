@@ -1,5 +1,4 @@
-module saucelabs.log.viewer.fileparser {
-    exports md.vnastasi.slv.data;
+module saucelabs.log.viewer.service {
 
     requires com.fasterxml.jackson.databind;
     requires org.jetbrains.annotations;

@@ -36,10 +36,6 @@ afterEvaluate {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.jlink {
     extension.options.addAll((listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")))
     extension.imageName.set("SacelabsLogViewer")
@@ -50,4 +46,18 @@ tasks.jlink {
 
 tasks.jlinkZip {
     group = "distribution"
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.compilerArgs.add("--enable-preview")
+}
+
+tasks.withType<Test> {
+    jvmArgs?.add("--enable-preview")
+    useJUnitPlatform()
+}
+
+tasks.withType<JavaExec> {
+    jvmArgs?.add("--enable-preview")
 }

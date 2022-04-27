@@ -8,4 +8,8 @@ public record LogEntry(
         LogLevel level,
         String message
 ) {
+
+    public String join() {
+        return String.format("%7d:\t%s\t%s\t%s", id, time, level.name(), message);
+    }
 }
