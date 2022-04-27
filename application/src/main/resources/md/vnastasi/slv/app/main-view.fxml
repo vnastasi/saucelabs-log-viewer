@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="md.vnastasi.slv.app.scene.MainSceneController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <Label fx:id="testLabel"/>
+    <HBox>
+        <Label text="Log file:" style="-fx-font-weight: bold">
+            <HBox.margin>
+                <Insets right="20"/>
+            </HBox.margin>
+        </Label>
 
-    <Button text="Test!" onAction="#onTestButtonClicked"/>
+        <Label fx:id="selectedLogFileLabel" text="[Nothing selected]" alignment="CENTER" prefHeight="20"
+               HBox.hgrow="ALWAYS"/>
+
+        <Button
+                text="Select log file"
+                fx:id="selectLogFileButton"
+                onMouseClicked="#onSelectLogFileClicked">
+            <HBox.margin>
+                <Insets left="20"/>
+            </HBox.margin>
+        </Button>
+    </HBox>
+
+    <ListView fx:id="logItemListView">
+        <VBox.margin>
+            <Insets top="20" />
+        </VBox.margin>
+    </ListView>
 
 </VBox>

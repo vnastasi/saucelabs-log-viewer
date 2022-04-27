@@ -4,8 +4,7 @@ import md.vnastasi.slv.model.*;
 import md.vnastasi.slv.filter.Filter;
 import md.vnastasi.slv.filter.FilterService;
 import md.vnastasi.slv.storage.Storage;
-import md.vnastasi.slv.usecase.CreateLogViewUseCase;
-import md.vnastasi.slv.usecase.impl.CreateLogViewUseCaseImpl;
+import md.vnastasi.slv.usecase.CreateLogItemsUseCase;
 import md.vnastasi.slv.usecase.model.FilterSpec;
 import md.vnastasi.slv.usecase.model.MessageKeywordSpec;
 import md.vnastasi.slv.usecase.model.RangeSpec;
@@ -23,12 +22,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class CreateLogViewUseCaseImplTest {
+class CreateLogItemsUseCaseImplTest {
 
     private final Storage mockStorage = Mockito.mock(Storage.class);
     private final FilterService mockFilterService = Mockito.mock(FilterService.class);
 
-    private final CreateLogViewUseCase useCase = new CreateLogViewUseCaseImpl(mockStorage, mockFilterService);
+    private final CreateLogItemsUseCase useCase = new CreateLogItemsUseCaseImpl(mockStorage, mockFilterService);
 
     @BeforeEach
     void setUp() {

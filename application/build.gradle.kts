@@ -23,6 +23,7 @@ java {
 dependencies {
     implementation(project(":service"))
     implementation("org.controlsfx:controlsfx:11.1.0")
+    implementation("org.jetbrains:annotations:20.1.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
@@ -31,7 +32,7 @@ dependencies {
 afterEvaluate {
     tasks.withType<JavaCompile> {
         doFirst {
-            options.compilerArgs.addAll(listOf("--module-path", classpath.asPath))
+            options.compilerArgs = listOf("--enable-preview", "--module-path", classpath.asPath)
             classpath = files()
         }
     }
@@ -49,16 +50,11 @@ tasks.jlinkZip {
     group = "distribution"
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-    options.compilerArgs.add("--enable-preview")
-}
-
 tasks.withType<Test> {
-    jvmArgs?.add("--enable-preview")
+    jvmArgs = listOf("--enable-preview")
     useJUnitPlatform()
 }
 
 tasks.withType<JavaExec> {
-    jvmArgs?.add("--enable-preview")
+    jvmArgs = listOf("--enable-preview")
 }

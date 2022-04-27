@@ -7,9 +7,9 @@ import md.vnastasi.slv.filter.FilterServiceImpl;
 import md.vnastasi.slv.parser.LogFileParser;
 import md.vnastasi.slv.parser.LogFileParserImpl;
 import md.vnastasi.slv.storage.Storage;
-import md.vnastasi.slv.usecase.CreateLogViewUseCase;
+import md.vnastasi.slv.usecase.CreateLogItemsUseCase;
 import md.vnastasi.slv.usecase.UploadLogFileUseCase;
-import md.vnastasi.slv.usecase.impl.CreateLogViewUseCaseImpl;
+import md.vnastasi.slv.usecase.impl.CreateLogItemsUseCaseImpl;
 import md.vnastasi.slv.usecase.impl.UploadLogFileUseCaseImpl;
 
 public class BeanFactory {
@@ -22,8 +22,8 @@ public class BeanFactory {
         return new UploadLogFileUseCaseImpl(Storage.getInstance(), createLogFileParser());
     }
 
-    public CreateLogViewUseCase createLogViewUseCase() {
-        return new CreateLogViewUseCaseImpl(Storage.getInstance(), createFilterService());
+    public CreateLogItemsUseCase createLogViewUseCase() {
+        return new CreateLogItemsUseCaseImpl(Storage.getInstance(), createFilterService());
     }
 
     private LogFileParser createLogFileParser() {

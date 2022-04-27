@@ -3,27 +3,25 @@ package md.vnastasi.slv.usecase.impl;
 import md.vnastasi.slv.model.LogLevel;
 import md.vnastasi.slv.usecase.model.FilterSpec;
 import md.vnastasi.slv.model.LogEntry;
-import md.vnastasi.slv.usecase.model.MessageKeywordSpec;
 import md.vnastasi.slv.usecase.model.RangeSpec;
 import md.vnastasi.slv.filter.Filter;
 import md.vnastasi.slv.filter.FilterService;
 import md.vnastasi.slv.storage.Storage;
-import md.vnastasi.slv.usecase.CreateLogViewUseCase;
+import md.vnastasi.slv.usecase.CreateLogItemsUseCase;
 import md.vnastasi.slv.util.CollectionUtils;
 import md.vnastasi.slv.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class CreateLogViewUseCaseImpl implements CreateLogViewUseCase {
+public class CreateLogItemsUseCaseImpl implements CreateLogItemsUseCase {
 
     private final Storage storage;
     private final FilterService filterService;
 
-    public CreateLogViewUseCaseImpl(Storage storage, FilterService filterService) {
+    public CreateLogItemsUseCaseImpl(Storage storage, FilterService filterService) {
         this.storage = storage;
         this.filterService = filterService;
     }

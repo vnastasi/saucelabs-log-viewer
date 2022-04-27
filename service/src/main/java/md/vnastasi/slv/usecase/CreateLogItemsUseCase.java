@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface CreateLogViewUseCase {
+public interface CreateLogItemsUseCase {
 
     List<String> execute(@NotNull FilterSpec filterSpec);
 }
