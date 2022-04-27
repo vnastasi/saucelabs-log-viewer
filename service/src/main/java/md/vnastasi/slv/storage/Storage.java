@@ -1,8 +1,8 @@
 package md.vnastasi.slv.storage;
 
 import md.vnastasi.slv.data.LogEntry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Storage {

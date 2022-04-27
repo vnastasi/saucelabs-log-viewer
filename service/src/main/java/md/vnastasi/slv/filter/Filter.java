@@ -2,6 +2,7 @@ package md.vnastasi.slv.filter;
 
 import md.vnastasi.slv.data.LogEntry;
 import md.vnastasi.slv.data.LogLevel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 
 public sealed interface Filter extends Predicate<LogEntry> {
 
-    record ByLogLevel(List<LogLevel> levels) implements Filter {
+    record ByLogLevel(@NotNull List<LogLevel> levels) implements Filter {
 
         @Override
         public boolean test(LogEntry logEntry) {
@@ -17,7 +18,7 @@ public sealed interface Filter extends Predicate<LogEntry> {
         }
     }
 
-    record ByMessage(String keyword, boolean caseSensitive) implements Filter {
+    record ByMessage(@NotNull String keyword, boolean caseSensitive) implements Filter {
 
         @Override
         public boolean test(LogEntry logEntry) {
@@ -39,7 +40,7 @@ public sealed interface Filter extends Predicate<LogEntry> {
         }
     }
 
-    record ByTimeRange(String start, String end) implements Filter {
+    record ByTimeRange(@NotNull String start, @NotNull String end) implements Filter {
 
         @Override
         public boolean test(LogEntry logEntry) {

@@ -1,8 +1,8 @@
 package md.vnastasi.slv.parser;
 
 import md.vnastasi.slv.data.LogEntry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;

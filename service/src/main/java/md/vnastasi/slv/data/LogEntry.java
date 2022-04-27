@@ -1,11 +1,11 @@
 package md.vnastasi.slv.data;
 
-import javax.validation.constraints.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public record LogEntry(
         int id,
         @NotNull String time,
-        @NotNull LogLevel level,
-        @NotNull String message
+        LogLevel level,
+        String message
 ) {
 }

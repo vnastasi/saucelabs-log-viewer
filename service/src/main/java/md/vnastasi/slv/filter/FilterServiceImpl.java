@@ -1,8 +1,8 @@
 package md.vnastasi.slv.filter;
 
 import md.vnastasi.slv.data.LogEntry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
