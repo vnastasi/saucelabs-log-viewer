@@ -1,7 +1,7 @@
 package md.vnastasi.slv.filter;
 
-import md.vnastasi.slv.data.LogEntry;
-import md.vnastasi.slv.data.LogLevel;
+import md.vnastasi.slv.model.LogEntry;
+import md.vnastasi.slv.model.LogLevel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

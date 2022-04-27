@@ -2,7 +2,7 @@ package md.vnastasi.slv.parser;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import md.vnastasi.slv.data.LogEntry;
+import md.vnastasi.slv.model.LogEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

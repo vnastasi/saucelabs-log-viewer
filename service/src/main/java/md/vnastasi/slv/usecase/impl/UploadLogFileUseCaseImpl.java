@@ -1,7 +1,8 @@
-package md.vnastasi.slv.usecase;
+package md.vnastasi.slv.usecase.impl;
 
 import md.vnastasi.slv.parser.LogFileParser;
 import md.vnastasi.slv.storage.Storage;
+import md.vnastasi.slv.usecase.UploadLogFileUseCase;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

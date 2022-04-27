@@ -1,6 +1,6 @@
 package md.vnastasi.slv.usecase;
 
-import md.vnastasi.slv.data.FilterSpec;
+import md.vnastasi.slv.usecase.model.FilterSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

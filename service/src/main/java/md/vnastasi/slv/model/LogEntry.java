@@ -1,4 +1,4 @@
-package md.vnastasi.slv.data;
+package md.vnastasi.slv.model;
 
 import org.jetbrains.annotations.NotNull;
 

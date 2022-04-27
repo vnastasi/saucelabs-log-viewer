@@ -1,4 +1,4 @@
-package md.vnastasi.slv.data;
+package md.vnastasi.slv.usecase.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -7,7 +7,7 @@ import java.util.List;
 
 public record FilterSpec(
         @Nullable RangeSpec range,
-        @Nullable List<LogLevel> logLevels,
+        @Nullable List<String> logLevels,
         @Nullable MessageKeywordSpec messageKeywordSpec
 ) {
 
@@ -19,7 +19,7 @@ public record FilterSpec(
         this(range, null, null);
     }
 
-    public FilterSpec(@NotNull List<LogLevel> logLevels) {
+    public FilterSpec(@NotNull List<String> logLevels) {
         this(null, logLevels, null);
     }
 

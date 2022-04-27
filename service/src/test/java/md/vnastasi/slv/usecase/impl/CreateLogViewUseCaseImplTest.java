@@ -1,9 +1,14 @@
-package md.vnastasi.slv.usecase;
+package md.vnastasi.slv.usecase.impl;
 
-import md.vnastasi.slv.data.*;
+import md.vnastasi.slv.model.*;
 import md.vnastasi.slv.filter.Filter;
 import md.vnastasi.slv.filter.FilterService;
 import md.vnastasi.slv.storage.Storage;
+import md.vnastasi.slv.usecase.CreateLogViewUseCase;
+import md.vnastasi.slv.usecase.impl.CreateLogViewUseCaseImpl;
+import md.vnastasi.slv.usecase.model.FilterSpec;
+import md.vnastasi.slv.usecase.model.MessageKeywordSpec;
+import md.vnastasi.slv.usecase.model.RangeSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -45,7 +50,7 @@ class CreateLogViewUseCaseImplTest {
     @Test
     @SuppressWarnings("unchecked")
     void verifyLineRangeFilter() {
-        useCase.execute(new FilterSpec(new RangeSpec.Line(0, 1)));
+        useCase.execute(new FilterSpec(new RangeSpec.LineNumber(0, 1)));
 
         ArgumentCaptor<List<Filter>> argumentCaptor = ArgumentCaptor.forClass(List.class);
         verify(mockFilterService).filter(any(), argumentCaptor.capture());
@@ -78,7 +83,7 @@ class CreateLogViewUseCaseImplTest {
     @Test
     @SuppressWarnings("unchecked")
     void verifyLogLevelFilter() {
-        useCase.execute(new FilterSpec(List.of(LogLevel.DEBUG)));
+        useCase.execute(new FilterSpec(List.of("DEBUG")));
 
         ArgumentCaptor<List<Filter>> argumentCaptor = ArgumentCaptor.forClass(List.class);
         verify(mockFilterService).filter(any(), argumentCaptor.capture());
@@ -90,8 +95,8 @@ class CreateLogViewUseCaseImplTest {
     @SuppressWarnings("unchecked")
     void verifyCombiFilter() {
         var filterSpec = new FilterSpec(
-                new RangeSpec.Line(0, 1),
-                List.of(LogLevel.DEBUG),
+                new RangeSpec.LineNumber(0, 1),
+                List.of("DEBUG"),
                 new MessageKeywordSpec("qwerty", false)
         );
         useCase.execute(filterSpec);

@@ -1,6 +1,6 @@
 package md.vnastasi.slv.parser;
 
-import md.vnastasi.slv.data.LogEntry;
+import md.vnastasi.slv.model.LogEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

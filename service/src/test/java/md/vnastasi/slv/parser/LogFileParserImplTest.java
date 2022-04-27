@@ -2,10 +2,8 @@ package md.vnastasi.slv.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import md.vnastasi.slv.data.LogEntry;
-import md.vnastasi.slv.data.LogLevel;
-import md.vnastasi.slv.parser.LogFileParser;
-import md.vnastasi.slv.parser.LogFileParserImpl;
+import md.vnastasi.slv.model.LogEntry;
+import md.vnastasi.slv.model.LogLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

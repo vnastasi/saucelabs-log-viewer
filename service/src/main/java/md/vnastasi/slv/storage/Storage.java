@@ -1,6 +1,6 @@
 package md.vnastasi.slv.storage;
 
-import md.vnastasi.slv.data.LogEntry;
+import md.vnastasi.slv.model.LogEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
