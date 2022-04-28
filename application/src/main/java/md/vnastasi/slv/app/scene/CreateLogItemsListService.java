@@ -15,9 +15,9 @@ class CreateLogItemsListService extends Service<List<LogEntry>> {
     private final CreateLogItemsUseCase createLogItemsUseCase;
     private final FilterSpec filterSpec;
 
-    CreateLogItemsListService() {
+    CreateLogItemsListService(FilterSpec filterSpec) {
         this.createLogItemsUseCase = BeanFactory.getInstance().createLogViewUseCase();
-        this.filterSpec = new FilterSpec();
+        this.filterSpec = filterSpec;
     }
 
     @Override

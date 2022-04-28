@@ -50,7 +50,7 @@
                 </font>
             </Label>
 
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="messageKeywordTextField">
                 <font>
                     <Font size="14.0"/>
                 </font>
@@ -64,22 +64,13 @@
 
             <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
 
-                <CheckBox text="VERBOSE">
+                <CheckBox text="VERBOSE" fx:id="verboseLevelCheckBox">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </CheckBox>
 
-                <CheckBox text="INFO">
-                    <font>
-                        <Font size="14.0"/>
-                    </font>
-                    <HBox.margin>
-                        <Insets left="10.0"/>
-                    </HBox.margin>
-                </CheckBox>
-
-                <CheckBox text="DEBUG">
+                <CheckBox text="INFO" fx:id="infoLevelCheckBox">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -88,7 +79,7 @@
                     </HBox.margin>
                 </CheckBox>
 
-                <CheckBox text="WARN">
+                <CheckBox text="DEBUG" fx:id="debugLevelCheckBox">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -97,7 +88,16 @@
                     </HBox.margin>
                 </CheckBox>
 
-                <CheckBox text="ERROR">
+                <CheckBox text="WARN" fx:id="warnLevelCheckBox">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </CheckBox>
+
+                <CheckBox text="ERROR" fx:id="errorLevelCheckBox">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -127,13 +127,11 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
 
-                <RadioButton text="By line number" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <RadioButton text="By line number" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                             fx:id="lineNumberPartitionButton">
                     <font>
                         <Font size="14.0"/>
                     </font>
-                    <toggleGroup>
-                        <!--<fx:reference source="partitionToggleGroup" />-->
-                    </toggleGroup>
                 </RadioButton>
 
                 <Label text="From:" GridPane.columnIndex="1" GridPane.rowIndex="0">
@@ -142,7 +140,7 @@
                     </font>
                 </Label>
 
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <TextField GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="lineNumberFromTextField">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -154,19 +152,16 @@
                     </font>
                 </Label>
 
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="0">
+                <TextField GridPane.columnIndex="4" GridPane.rowIndex="0" fx:id="lineNumberToTextField">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </TextField>
 
-                <RadioButton text="By time" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <RadioButton text="By time" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="timePartitionButton">
                     <font>
                         <Font size="14.0"/>
                     </font>
-                    <toggleGroup>
-                        <!--<fx:reference source="partitionToggleGroup" />-->
-                    </toggleGroup>
                 </RadioButton>
 
                 <Label text="From:" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -175,7 +170,7 @@
                     </font>
                 </Label>
 
-                <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="timeFromTextField">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -187,7 +182,7 @@
                     </font>
                 </Label>
 
-                <TextField GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <TextField GridPane.columnIndex="4" GridPane.rowIndex="1" fx:id="timeToTextField">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -195,7 +190,8 @@
 
             </GridPane>
 
-            <Button text="Apply" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button text="Apply" GridPane.columnIndex="2" GridPane.rowIndex="3" onMouseClicked="#onApplyFiltersClicked"
+                    disable="true" fx:id="applyFilterButton">
                 <font>
                     <Font size="14.0"/>
                 </font>
