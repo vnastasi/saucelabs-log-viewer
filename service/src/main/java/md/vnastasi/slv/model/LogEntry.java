@@ -10,6 +10,6 @@ public record LogEntry(
 ) {
 
     public String join() {
-        return String.format("%7d:\t%s\t%s\t%s", id, time, level.name(), message);
+        return String.format("%7d\t\t%s %s %s", id, time, level.name(), message);
     }
 }

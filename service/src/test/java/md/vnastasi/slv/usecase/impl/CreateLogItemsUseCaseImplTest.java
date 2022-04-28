@@ -5,9 +5,9 @@ import md.vnastasi.slv.filter.Filter;
 import md.vnastasi.slv.filter.FilterService;
 import md.vnastasi.slv.storage.Storage;
 import md.vnastasi.slv.usecase.CreateLogItemsUseCase;
-import md.vnastasi.slv.usecase.model.FilterSpec;
-import md.vnastasi.slv.usecase.model.MessageKeywordSpec;
-import md.vnastasi.slv.usecase.model.RangeSpec;
+import md.vnastasi.slv.model.FilterSpec;
+import md.vnastasi.slv.model.MessageKeywordSpec;
+import md.vnastasi.slv.model.RangeSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -117,6 +117,6 @@ class CreateLogItemsUseCaseImplTest {
         when(mockFilterService.filter(eq(List.of(logEntry)), any())).thenReturn(Stream.of(logEntry));
 
         var lines = useCase.execute(new FilterSpec());
-        assertThat(lines).containsExactly(" 100000:\t01:01:23\tERROR\tMessage");
+        assertThat(lines).containsExactly(logEntry);
     }
 }

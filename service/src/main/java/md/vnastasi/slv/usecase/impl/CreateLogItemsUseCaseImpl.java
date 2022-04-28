@@ -1,9 +1,9 @@
 package md.vnastasi.slv.usecase.impl;
 
 import md.vnastasi.slv.model.LogLevel;
-import md.vnastasi.slv.usecase.model.FilterSpec;
+import md.vnastasi.slv.model.FilterSpec;
 import md.vnastasi.slv.model.LogEntry;
-import md.vnastasi.slv.usecase.model.RangeSpec;
+import md.vnastasi.slv.model.RangeSpec;
 import md.vnastasi.slv.filter.Filter;
 import md.vnastasi.slv.filter.FilterService;
 import md.vnastasi.slv.storage.Storage;
@@ -27,8 +27,8 @@ public class CreateLogItemsUseCaseImpl implements CreateLogItemsUseCase {
     }
 
     @Override
-    public List<String> execute(@NotNull FilterSpec filterSpec) {
-        return filterService.filter(storage.getList(), createFilterList(filterSpec)).map(LogEntry::join).toList();
+    public List<LogEntry> execute(@NotNull FilterSpec filterSpec) {
+        return filterService.filter(storage.getList(), createFilterList(filterSpec)).toList();
     }
 
     private List<Filter> createFilterList(@NotNull FilterSpec filterSpec) {

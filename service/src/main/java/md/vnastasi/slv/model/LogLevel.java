@@ -2,5 +2,5 @@ package md.vnastasi.slv.model;
 
 public enum LogLevel {
 
-    VERBOSE, DEBUG, INFO, ERROR
+    VERBOSE, DEBUG, INFO, WARN, ERROR
 }

@@ -1,4 +1,4 @@
-package md.vnastasi.slv.usecase.model;
+package md.vnastasi.slv.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
