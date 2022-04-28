@@ -1,39 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="md.vnastasi.slv.app.scene.MainSceneController">
+<?import javafx.scene.text.*?>
+<VBox prefHeight="920" prefWidth="1080" spacing="20.0" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="md.vnastasi.slv.app.scene.MainSceneController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
     <HBox>
-        <Label text="Log file:" style="-fx-font-weight: bold">
+        <Button fx:id="selectLogFileButton" mnemonicParsing="false" onMouseClicked="#onSelectLogFileClicked"
+                text="Select log file" HBox.hgrow="NEVER">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Button>
+        <Label fx:id="selectedLogFileLabel" text="[Nothing selected]" HBox.hgrow="ALWAYS" maxHeight="Infinity">
+            <font>
+                <Font size="16.0"/>
+            </font>
             <HBox.margin>
-                <Insets right="20"/>
+                <Insets left="40.0"/>
             </HBox.margin>
         </Label>
-
-        <Label fx:id="selectedLogFileLabel" text="[Nothing selected]" alignment="CENTER" prefHeight="20"
-               HBox.hgrow="ALWAYS"/>
-
-        <Button
-                text="Select log file"
-                fx:id="selectLogFileButton"
-                onMouseClicked="#onSelectLogFileClicked">
-            <HBox.margin>
-                <Insets left="20"/>
-            </HBox.margin>
-        </Button>
+        <Pane maxHeight="1" minWidth="40.0" prefHeight="1" HBox.hgrow="ALWAYS"/>
     </HBox>
 
-    <ListView fx:id="logItemListView">
-        <VBox.margin>
-            <Insets top="20" />
-        </VBox.margin>
-    </ListView>
+    <TitledPane text="Filters">
+
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="155.0"/>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="863.0"/>
+                <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="80"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+
+            <Label text="Message keyword:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+            </Label>
+
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </TextField>
+
+            <Label text="Log levels:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+            </Label>
+
+            <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+
+                <CheckBox text="VERBOSE">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </CheckBox>
+
+                <CheckBox text="INFO">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </CheckBox>
+
+                <CheckBox text="DEBUG">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </CheckBox>
+
+                <CheckBox text="WARN">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </CheckBox>
+
+                <CheckBox text="ERROR">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </CheckBox>
+
+            </HBox>
+
+            <Label text="Partition:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+            </Label>
+
+            <GridPane hgap="10" vgap="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="NEVER"/>
+                    <ColumnConstraints hgrow="NEVER"/>
+                    <ColumnConstraints hgrow="NEVER" maxWidth="80" prefWidth="80"/>
+                    <ColumnConstraints hgrow="NEVER"/>
+                    <ColumnConstraints hgrow="NEVER" maxWidth="80" prefWidth="80"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+
+                <RadioButton text="By line number" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <toggleGroup>
+                        <!--<fx:reference source="partitionToggleGroup" />-->
+                    </toggleGroup>
+                </RadioButton>
+
+                <Label text="From:" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+                <TextField GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </TextField>
+
+                <Label text="To:" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+                <TextField GridPane.columnIndex="4" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </TextField>
+
+                <RadioButton text="By time" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <toggleGroup>
+                        <!--<fx:reference source="partitionToggleGroup" />-->
+                    </toggleGroup>
+                </RadioButton>
+
+                <Label text="From:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+                <TextField GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </TextField>
+
+                <Label text="To:" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+
+                <TextField GridPane.columnIndex="4" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </TextField>
+
+            </GridPane>
+
+            <Button text="Apply" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Button>
+
+        </GridPane>
+
+    </TitledPane>
+
+    <ListView fx:id="logItemListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
 
 </VBox>

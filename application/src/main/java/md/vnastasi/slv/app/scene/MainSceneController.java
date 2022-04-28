@@ -3,10 +3,10 @@ package md.vnastasi.slv.app.scene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class MainSceneController {
 
     @FXML
     protected void initialize() {
-        logItemListView.setItems(logItemObservableList);
+        setupListView();
     }
 
     @FXML
@@ -43,6 +43,21 @@ public class MainSceneController {
         } else {
             selectedLogFileLabel.setText("[Nothing selected]");
         }
+    }
+
+    private void setupListView() {
+        logItemListView.setItems(logItemObservableList);
+        logItemListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        logItemListView.setCellFactory(cell -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item);
+                    setFont(Font.font(14));
+                }
+            }
+        });
     }
 
     private void uploadFile(@NotNull File logFile) {
