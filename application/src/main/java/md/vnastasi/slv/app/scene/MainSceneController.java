@@ -39,6 +39,10 @@ public class MainSceneController {
 
     @FXML
     @NotNull
+    private CheckBox caseSensitiveKeywordCheckbox;
+
+    @FXML
+    @NotNull
     private CheckBox verboseLevelCheckBox;
 
     @FXML
@@ -136,6 +140,7 @@ public class MainSceneController {
 
     private void bindProperties() {
         Bindings.bindBidirectional(messageKeywordTextField.textProperty(), observableFilterSpec.messageKeywordText);
+        Bindings.bindBidirectional(caseSensitiveKeywordCheckbox.selectedProperty(), observableFilterSpec.caseSensitiveKeywordSelected);
         Bindings.bindBidirectional(verboseLevelCheckBox.selectedProperty(), observableFilterSpec.verboseLevelSelected);
         Bindings.bindBidirectional(infoLevelCheckBox.selectedProperty(), observableFilterSpec.infoLevelSelected);
         Bindings.bindBidirectional(debugLevelCheckBox.selectedProperty(), observableFilterSpec.debugLevelSelected);
@@ -186,6 +191,7 @@ public class MainSceneController {
     private class ObservableFilterSpec {
 
         private final StringProperty messageKeywordText = new SimpleStringProperty();
+        private final BooleanProperty caseSensitiveKeywordSelected = new SimpleBooleanProperty(false);
         private final BooleanProperty verboseLevelSelected = new SimpleBooleanProperty(true);
         private final BooleanProperty infoLevelSelected = new SimpleBooleanProperty(true);
         private final BooleanProperty debugLevelSelected = new SimpleBooleanProperty(true);
@@ -223,7 +229,7 @@ public class MainSceneController {
                 rangeSpec = null;
             }
 
-            return new FilterSpec(rangeSpec, logLevels, new MessageKeywordSpec(messageKeywordText.get(), false));
+            return new FilterSpec(rangeSpec, logLevels, new MessageKeywordSpec(messageKeywordText.get(), caseSensitiveKeywordSelected.get()));
         }
     }
 }

@@ -10,11 +10,16 @@ import java.io.IOException;
 
 public class SaucelabsLogViewerApplication extends Application {
 
+    private static final double MIN_WINDOW_WIDTH = 1080;
+    private static final double MIN_WINDOW_HEIGHT = 720;
+
     @Override
     public void start(@NotNull Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SaucelabsLogViewerApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
+        Scene scene = new Scene(fxmlLoader.load(), MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT);
         stage.setTitle("Saucelabs Log Viewer");
+        stage.setMinWidth(MIN_WINDOW_WIDTH);
+        stage.setMinHeight(MIN_WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
