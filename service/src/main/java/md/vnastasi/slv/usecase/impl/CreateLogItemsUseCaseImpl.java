@@ -49,7 +49,6 @@ public class CreateLogItemsUseCaseImpl implements CreateLogItemsUseCase {
 
         Optional.ofNullable(filterSpec.logLevels())
                 .filter(CollectionUtils::isNotEmpty)
-                .map(it -> it.stream().map(LogLevel::valueOf).toList())
                 .ifPresent(it -> list.add(new Filter.ByLogLevel(it)));
 
         Optional.ofNullable(filterSpec.messageKeywordSpec())

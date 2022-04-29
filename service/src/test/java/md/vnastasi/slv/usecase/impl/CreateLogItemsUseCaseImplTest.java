@@ -82,7 +82,7 @@ class CreateLogItemsUseCaseImplTest {
     @Test
     @SuppressWarnings("unchecked")
     void verifyLogLevelFilter() {
-        useCase.execute(new FilterSpec(List.of("DEBUG")));
+        useCase.execute(new FilterSpec(List.of(LogLevel.DEBUG)));
 
         ArgumentCaptor<List<Filter>> argumentCaptor = ArgumentCaptor.forClass(List.class);
         verify(mockFilterService).filter(any(), argumentCaptor.capture());
@@ -95,7 +95,7 @@ class CreateLogItemsUseCaseImplTest {
     void verifyCombiFilter() {
         var filterSpec = new FilterSpec(
                 new RangeSpec.LineNumber(0, 1),
-                List.of("DEBUG"),
+                List.of(LogLevel.DEBUG),
                 new MessageKeywordSpec("qwerty", false)
         );
         useCase.execute(filterSpec);

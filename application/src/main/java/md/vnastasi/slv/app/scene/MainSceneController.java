@@ -1,23 +1,16 @@
 package md.vnastasi.slv.app.scene;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-import md.vnastasi.slv.model.*;
+import md.vnastasi.slv.model.LogEntry;
+import md.vnastasi.slv.model.LogLevel;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class MainSceneController {
 
@@ -89,14 +82,13 @@ public class MainSceneController {
     @NotNull
     private ListView<LogEntry> logItemListView;
 
-    private final ObservableList<LogEntry> logItemObservableList = FXCollections.observableArrayList();
-    private final ObservableFilterSpec observableFilterSpec = new ObservableFilterSpec();
-    private final ToggleGroup partitionToggleGroup = new ToggleGroup();
+    private final MainSceneViewModel viewModel = new MainSceneViewModel();
 
     @FXML
     protected void initialize() {
         setupListView();
         setupRadioButtons();
+        setupTextFields();
         bindProperties();
     }
 
@@ -105,20 +97,16 @@ public class MainSceneController {
         var fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("LOG files", "*.log"));
         var file = fileChooser.showOpenDialog(selectLogFileButton.getScene().getWindow());
-        if (file != null) {
-            uploadFile(file);
-        } else {
-            selectedLogFileLabel.setText("[Nothing selected]");
-        }
+        viewModel.onLogFileUpload(file);
     }
 
     @FXML
     protected void onApplyFiltersClicked() {
-        refreshLogItemList();
+        viewModel.onRefreshListView();
     }
 
     private void setupListView() {
-        logItemListView.setItems(logItemObservableList);
+        logItemListView.setItems(viewModel.observableLogEntryList);
         logItemListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         logItemListView.setCellFactory(cell -> new ListCell<>() {
             @Override
@@ -134,25 +122,42 @@ public class MainSceneController {
     }
 
     private void setupRadioButtons() {
-        lineNumberPartitionButton.setToggleGroup(partitionToggleGroup);
-        timePartitionButton.setToggleGroup(partitionToggleGroup);
+        lineNumberPartitionButton.setToggleGroup(viewModel.partitionTypeToggleGroup);
+        lineNumberPartitionButton.setUserData(MainSceneViewModel.SELECTED_PARTITION_LINE_NUMBER);
+        timePartitionButton.setToggleGroup(viewModel.partitionTypeToggleGroup);
+        timePartitionButton.setUserData(MainSceneViewModel.SELECTED_PARTITION_TIME);
+    }
+
+    private void setupTextFields() {
+        UnaryOperator<TextFormatter.Change> numbersOnlyChangeOperator = change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                return change;
+            } else {
+                return null;
+            }
+        };
+        lineNumberFromTextField.setTextFormatter(new TextFormatter<>(numbersOnlyChangeOperator));
+        lineNumberToTextField.setTextFormatter(new TextFormatter<>(numbersOnlyChangeOperator));
     }
 
     private void bindProperties() {
-        Bindings.bindBidirectional(messageKeywordTextField.textProperty(), observableFilterSpec.messageKeywordText);
-        Bindings.bindBidirectional(caseSensitiveKeywordCheckbox.selectedProperty(), observableFilterSpec.caseSensitiveKeywordSelected);
-        Bindings.bindBidirectional(verboseLevelCheckBox.selectedProperty(), observableFilterSpec.verboseLevelSelected);
-        Bindings.bindBidirectional(infoLevelCheckBox.selectedProperty(), observableFilterSpec.infoLevelSelected);
-        Bindings.bindBidirectional(debugLevelCheckBox.selectedProperty(), observableFilterSpec.debugLevelSelected);
-        Bindings.bindBidirectional(warnLevelCheckBox.selectedProperty(), observableFilterSpec.warnLevelSelected);
-        Bindings.bindBidirectional(errorLevelCheckBox.selectedProperty(), observableFilterSpec.errorLevelSelected);
-        Bindings.bindBidirectional(lineNumberFromTextField.textProperty(), observableFilterSpec.lineNumberFromText);
-        Bindings.bindBidirectional(lineNumberToTextField.textProperty(), observableFilterSpec.lineNumberToText);
-        Bindings.bindBidirectional(timeFromTextField.textProperty(), observableFilterSpec.timeFromText);
-        Bindings.bindBidirectional(timeToTextField.textProperty(), observableFilterSpec.timeToText);
+        Bindings.bindBidirectional(selectLogFileButton.disableProperty(), viewModel.uploadFileDisabledProperty);
+        Bindings.bindBidirectional(selectedLogFileLabel.textProperty(), viewModel.selectedFileTextProperty);
+        Bindings.bindBidirectional(messageKeywordTextField.textProperty(), viewModel.messageKeywordTextProperty);
+        Bindings.bindBidirectional(caseSensitiveKeywordCheckbox.selectedProperty(), viewModel.caseSensitiveToggleProperty);
+        Bindings.bindBidirectional(verboseLevelCheckBox.selectedProperty(), viewModel.verboseLogLevelToggleProperty);
+        Bindings.bindBidirectional(infoLevelCheckBox.selectedProperty(), viewModel.infoLogLevelToggleProperty);
+        Bindings.bindBidirectional(debugLevelCheckBox.selectedProperty(), viewModel.debugLogLevelToggleProperty);
+        Bindings.bindBidirectional(warnLevelCheckBox.selectedProperty(), viewModel.warnLogLevelToggleProperty);
+        Bindings.bindBidirectional(errorLevelCheckBox.selectedProperty(), viewModel.errorLogLevelToggleProperty);
+        Bindings.bindBidirectional(lineNumberFromTextField.textProperty(), viewModel.lineNumberFromTextProperty);
+        Bindings.bindBidirectional(lineNumberToTextField.textProperty(), viewModel.lineNumberToTextProperty);
+        Bindings.bindBidirectional(timeFromTextField.textProperty(), viewModel.timeFromTextProperty);
+        Bindings.bindBidirectional(timeToTextField.textProperty(), viewModel.timeToTextProperty);
+        Bindings.bindBidirectional(applyFilterButton.disableProperty(), viewModel.applyFiltersDisabledProperty);
     }
 
-    private Color getLogLevelColor(LogLevel logLevel) {
+    private @NotNull Color getLogLevelColor(@NotNull LogLevel logLevel) {
         return switch (logLevel) {
             case ERROR -> Color.RED;
             case WARN -> Color.DARKORANGE;
@@ -160,76 +165,5 @@ public class MainSceneController {
             case INFO -> Color.BLACK;
             case VERBOSE -> Color.DARKGREY;
         };
-    }
-
-    private void uploadFile(@NotNull File logFile) {
-        var service = new LogFileUploadService(logFile);
-        service.setOnSucceeded(event -> {
-            selectedLogFileLabel.setText(logFile.getPath());
-            applyFilterButton.setDisable(false);
-            refreshLogItemList();
-        });
-        service.setOnFailed(event -> {
-            event.getSource().getException().printStackTrace();
-            selectedLogFileLabel.setText("[Error]");
-        });
-        service.start();
-    }
-
-    private void refreshLogItemList() {
-        var service = new CreateLogItemsListService(observableFilterSpec.createFilterSpec());
-        service.setOnSucceeded(event -> {
-            @SuppressWarnings("unchecked") var list = (List<LogEntry>) event.getSource().getValue();
-            logItemObservableList.setAll(list);
-        });
-        service.setOnFailed(event -> {
-            event.getSource().getException().printStackTrace();
-        });
-        service.start();
-    }
-
-    private class ObservableFilterSpec {
-
-        private final StringProperty messageKeywordText = new SimpleStringProperty();
-        private final BooleanProperty caseSensitiveKeywordSelected = new SimpleBooleanProperty(false);
-        private final BooleanProperty verboseLevelSelected = new SimpleBooleanProperty(true);
-        private final BooleanProperty infoLevelSelected = new SimpleBooleanProperty(true);
-        private final BooleanProperty debugLevelSelected = new SimpleBooleanProperty(true);
-        private final BooleanProperty warnLevelSelected = new SimpleBooleanProperty(true);
-        private final BooleanProperty errorLevelSelected = new SimpleBooleanProperty(true);
-        private final StringProperty lineNumberFromText = new SimpleStringProperty();
-        private final StringProperty lineNumberToText = new SimpleStringProperty();
-        private final StringProperty timeFromText = new SimpleStringProperty();
-        private final StringProperty timeToText = new SimpleStringProperty();
-
-        public FilterSpec createFilterSpec() {
-            var logLevels = new ArrayList<String>();
-            if (verboseLevelSelected.get()) {
-                logLevels.add(LogLevel.VERBOSE.name());
-            }
-            if (infoLevelSelected.get()) {
-                logLevels.add(LogLevel.INFO.name());
-            }
-            if (debugLevelSelected.get()) {
-                logLevels.add(LogLevel.DEBUG.name());
-            }
-            if (warnLevelSelected.get()) {
-                logLevels.add(LogLevel.WARN.name());
-            }
-            if (errorLevelSelected.get()) {
-                logLevels.add(LogLevel.ERROR.name());
-            }
-
-            RangeSpec rangeSpec;
-            if (partitionToggleGroup.getSelectedToggle() == lineNumberPartitionButton) {
-                rangeSpec = new RangeSpec.LineNumber(Integer.parseInt(lineNumberFromText.get()), Integer.parseInt(lineNumberToText.get()));
-            } else if (partitionToggleGroup.getSelectedToggle() == timePartitionButton) {
-                rangeSpec = new RangeSpec.Time(timeFromText.get(), timeToText.get());
-            } else {
-                rangeSpec = null;
-            }
-
-            return new FilterSpec(rangeSpec, logLevels, new MessageKeywordSpec(messageKeywordText.get(), caseSensitiveKeywordSelected.get()));
-        }
     }
 }

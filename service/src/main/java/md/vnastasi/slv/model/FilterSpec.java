@@ -7,7 +7,7 @@ import java.util.List;
 
 public record FilterSpec(
         @Nullable RangeSpec range,
-        @Nullable List<String> logLevels,
+        @Nullable List<LogLevel> logLevels,
         @Nullable MessageKeywordSpec messageKeywordSpec
 ) {
 
@@ -19,7 +19,7 @@ public record FilterSpec(
         this(range, null, null);
     }
 
-    public FilterSpec(@NotNull List<String> logLevels) {
+    public FilterSpec(@NotNull List<LogLevel> logLevels) {
         this(null, logLevels, null);
     }
 
