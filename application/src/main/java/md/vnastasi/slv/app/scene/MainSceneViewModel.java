@@ -96,12 +96,12 @@ public class MainSceneViewModel {
     private @Nullable RangeSpec createRangeSpec(@NotNull String selectedToggleName) {
         return switch (selectedToggleName) {
             case SELECTED_PARTITION_LINE_NUMBER -> new RangeSpec.LineNumber(
-                    Integer.parseInt(lineNumberFromTextProperty.get()),
-                    Integer.parseInt(lineNumberToTextProperty.get())
+                    getLineNumberValue(lineNumberFromTextProperty, Integer.MIN_VALUE),
+                    getLineNumberValue(lineNumberToTextProperty, Integer.MAX_VALUE)
             );
             case SELECTED_PARTITION_TIME -> new RangeSpec.Time(
-                    timeFromTextProperty.get(),
-                    timeToTextProperty.get()
+                    getTimeValue(timeFromTextProperty, "00:00:00"),
+                    getTimeValue(timeToTextProperty, "23:59:59")
             );
             default -> null;
         };
@@ -126,5 +126,20 @@ public class MainSceneViewModel {
         }
 
         return logLevelList;
+    }
+
+    private int getLineNumberValue(@NotNull StringProperty property, int defaultValue) {
+        return Optional.of(property)
+                .map(StringProperty::get)
+                .filter(it -> !it.isEmpty())
+                .map(Integer::parseInt)
+                .orElse(defaultValue);
+    }
+
+    private @NotNull String getTimeValue(@NotNull StringProperty property, String defaultValue) {
+        return Optional.of(property)
+                .map(StringProperty::get)
+                .filter(it -> !it.isEmpty())
+                .orElse(defaultValue);
     }
 }
