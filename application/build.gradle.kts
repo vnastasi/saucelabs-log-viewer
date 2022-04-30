@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainModule.set("md.vnastasi.slv.app")
+    mainModule.set("saucelabs.log.viewer.app")
     mainClass.set("md.vnastasi.slv.app.SaucelabsLogViewerApplication")
 }
 
@@ -39,7 +39,7 @@ afterEvaluate {
 }
 
 tasks.jlink {
-    extension.options.addAll((listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")))
+    extension.options.addAll(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
     extension.imageName.set("SacelabsLogViewer")
     launcherData.apply {
         name = "Saucelabs-Log-Viewer"

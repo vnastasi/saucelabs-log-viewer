@@ -1,10 +1,10 @@
-module slv.app {
+module saucelabs.log.viewer.app {
 
     requires javafx.controls;
     requires javafx.fxml;
     requires org.controlsfx.controls;
     requires org.jetbrains.annotations;
-    requires slv.service;
+    requires saucelabs.log.viewer.service;
 
     exports md.vnastasi.slv.app;
     exports md.vnastasi.slv.app.scene;
