@@ -3,10 +3,12 @@ package md.vnastasi.slv.app;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SaucelabsLogViewerApplication extends Application {
 
@@ -20,6 +22,7 @@ public class SaucelabsLogViewerApplication extends Application {
         stage.setTitle("Saucelabs Log Viewer");
         stage.setMinWidth(MIN_WINDOW_WIDTH);
         stage.setMinHeight(MIN_WINDOW_HEIGHT);
+        stage.getIcons().add(new Image(Objects.requireNonNull(SaucelabsLogViewerApplication.class.getResourceAsStream("/images/icon.png"))));
         stage.setScene(scene);
         stage.show();
     }
