@@ -21,6 +21,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":logging"))
     implementation(project(":service"))
     implementation("org.controlsfx:controlsfx:11.1.0")
     implementation("org.jetbrains:annotations:20.1.0")
@@ -39,9 +40,14 @@ afterEvaluate {
 }
 
 tasks.jlink {
-    extension.options.addAll(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
     extension.imageName.set("SacelabsLogViewer")
+    extension.options.addAll(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
+    extension.mergedModule {
+        requires("java.naming")
+        requires("java.xml")
+    }
     launcherData.apply {
+        jvmArgs = listOf("--enable-preview")
         name = "Saucelabs-Log-Viewer"
     }
 }

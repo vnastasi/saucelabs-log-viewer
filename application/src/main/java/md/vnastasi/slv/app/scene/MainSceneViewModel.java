@@ -19,6 +19,8 @@ import java.util.Optional;
 
 public class MainSceneViewModel {
 
+    private static final System.Logger logger = System.getLogger(MainSceneViewModel.class.getName());
+
     public static final String SELECTED_PARTITION_LINE_NUMBER = "SELECTED_PARTITION_LINE_NUMBER";
     public static final String SELECTED_PARTITION_TIME = "SELECTED_PARTITION_TIME";
 
@@ -46,37 +48,43 @@ public class MainSceneViewModel {
         if (file != null) {
             doOnFileUploaded(file);
         } else {
+            logger.log(System.Logger.Level.WARNING, "Selected log file is null");
             selectedFileTextProperty.set("[Nothing selected]");
         }
     }
 
     public void onRefreshListView() {
         applyFiltersDisabledProperty.set(true);
-        var service = new CreateLogItemsListService(createFilterSpec());
+        var filterSpec = createFilterSpec();
+        logger.log(System.Logger.Level.INFO, "Filtering log entries using following filters: {0}", filterSpec);
+        var service = new CreateLogItemsListService(filterSpec);
         service.setOnSucceeded(event -> {
             @SuppressWarnings("unchecked") var list = (List<LogEntry>) event.getSource().getValue();
             observableLogEntryList.setAll(list);
             applyFiltersDisabledProperty.set(false);
+            logger.log(System.Logger.Level.INFO, "Filtered {0} log entries", list.size());
         });
         service.setOnFailed(event -> {
-            event.getSource().getException().printStackTrace();
             applyFiltersDisabledProperty.set(false);
+            logger.log(System.Logger.Level.ERROR, "Exception filtering log entries", event.getSource().getException());
         });
         service.start();
     }
 
     private void doOnFileUploaded(@NotNull File file) {
         uploadFileDisabledProperty.set(true);
+        logger.log(System.Logger.Level.INFO, "Uploading log file {0}", file.getPath());
         var service = new LogFileUploadService(file);
         service.setOnSucceeded(event -> {
             selectedFileTextProperty.set(file.getPath());
             uploadFileDisabledProperty.set(false);
+            logger.log(System.Logger.Level.INFO, "Log file {0} uploaded successfully", file.getPath());
             onRefreshListView();
         });
         service.setOnFailed(event -> {
-            event.getSource().getException().printStackTrace();
             selectedFileTextProperty.set("[Error uploading file]");
             uploadFileDisabledProperty.set(false);
+            logger.log(System.Logger.Level.ERROR, "Exception uploading log file", event.getSource().getException());
         });
         service.start();
     }
